@@ -2,7 +2,6 @@ package storage
 
 import (
 	"errors"
-	"fmt"
 	"sync"
 )
 
@@ -70,27 +69,4 @@ func (s *MemoryStorage) Update(id int, e Employee) {
 	defer s.Unlock()
 
 	s.data[id] = e
-}
-
-type DumbStorage struct{}
-
-func NewDumbStorage() *DumbStorage {
-	return &DumbStorage{}
-}
-
-func (s *DumbStorage) Insert(e Employee) error {
-	fmt.Printf("succesfully insert with such id: %d\n", e.Id)
-	return nil
-}
-
-func (s *DumbStorage) Get(id int) (Employee, error) {
-	e := Employee{
-		Id: id,
-	}
-	return e, nil
-}
-
-func (s *DumbStorage) Delete(id int) error {
-	fmt.Printf("succesfully delete with such id: %d", id)
-	return nil
 }
