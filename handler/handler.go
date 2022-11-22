@@ -102,3 +102,16 @@ func (h *Handler) DeleteEmployee(c *gin.Context) {
 
 	c.String(http.StatusOK, "employee deleted")
 }
+
+func (h *Handler) GetEmployees(c *gin.Context) {
+	employees, err := h.storage.GetAll()
+	if err != nil {
+		fmt.Printf("failed to get all employees: %s\n", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, employees)
+}

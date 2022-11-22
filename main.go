@@ -16,6 +16,7 @@ func main() {
 	router.GET("/employee/:id", handler.GetEmployee)
 	router.PUT("/employee/:id", handler.UpdateEmployee)
 	router.DELETE("/employee/:id", handler.DeleteEmployee)
+	router.GET("/employee", handler.GetEmployees)
 
 	router.Run()
 }
