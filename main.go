@@ -1,24 +1,21 @@
 package main
 
 import (
-	"fmt"
-
+	"github.com/gin-gonic/gin"
+	"github.com/sabmile/zhashkevych/employee/handler"
 	"github.com/sabmile/zhashkevych/employee/storage"
 )
 
-func spawnEmployees(s storage.Storage) {
-	for i := 1; i <= 10; i++ {
-		s.Insert(storage.Employee{Id: i})
-	}
-}
-
 func main() {
 	ms := storage.NewMemoryStorage()
-	ds := storage.NewDumbStorage()
+	handler := handler.NewHandler(ms)
 
-	spawnEmployees(ms)
-	fmt.Println(ms.Get(3))
+	router := gin.Default()
 
-	spawnEmployees(ds)
+	router.POST("/employee", handler.CreateEmployee)
+	router.GET("/employee/:id", handler.GetEmployee)
+	router.PUT("/employee/:id", handler.UpdateEmployee)
+	router.DELETE("/employee/:id", handler.DeleteEmployee)
 
+	router.Run()
 }
